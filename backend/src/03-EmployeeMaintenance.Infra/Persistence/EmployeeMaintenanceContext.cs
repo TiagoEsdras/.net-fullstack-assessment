@@ -36,10 +36,16 @@ namespace EmployeeMaintenance.Infra.Persistence
 
             #region Relationships
 
-            modelBuilder.Entity<Address>()
-                .HasOne(a => a.User)
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Address)
                 .WithOne()
                 .HasForeignKey<Address>(a => a.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.User)
+                .WithOne()
+                .HasForeignKey<Employee>(e => e.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Employee>()
@@ -47,12 +53,6 @@ namespace EmployeeMaintenance.Infra.Persistence
                 .WithMany()
                 .HasForeignKey(e => e.DepartmentId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Employee>()
-                .HasOne(e => e.User)
-                .WithOne()
-                .HasForeignKey<Employee>(e => e.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
 
             #endregion Relationships
         }

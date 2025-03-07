@@ -19,5 +19,7 @@ namespace EmployeeMaintenance.Domain.Entities
         [MaxLength(20)]
         [Column("phone")]
         public string Phone { get; private set; }
+
+        public virtual Address Address { get; private set; }
     }
 }

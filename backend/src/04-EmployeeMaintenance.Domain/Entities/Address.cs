@@ -28,7 +28,5 @@ namespace EmployeeMaintenance.Domain.Entities
         [ForeignKey("User")]
         [Column("user_id")]
         public Guid UserId { get; private set; }
-
-        public virtual User User { get; private set; }
     }
 }
