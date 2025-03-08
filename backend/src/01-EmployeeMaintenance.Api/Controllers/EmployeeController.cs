@@ -35,5 +35,12 @@ namespace EmployeeMaintenance.Api.Controllers
             var result = await _mediator.Send(new GetEmployeesQuery());
             return _actionResultConverter.Convert(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetEmployeeById(Guid id)
+        {
+            var result = await _mediator.Send(new GetEmployeeByIdQuery(id));
+            return _actionResultConverter.Convert(result);
+        }
     }
 }
