@@ -55,6 +55,22 @@ namespace EmployeeMaintenance.Infra.Persistence
                 .OnDelete(DeleteBehavior.Restrict);
 
             #endregion Relationships
+
+            #region Includes
+
+            modelBuilder.Entity<Employee>()
+                .Navigation(s => s.User)
+                .AutoInclude();
+
+            modelBuilder.Entity<Employee>()
+               .Navigation(s => s.Department)
+               .AutoInclude();
+
+            modelBuilder.Entity<User>()
+               .Navigation(s => s.Address)
+               .AutoInclude();
+
+            #endregion Includes
         }
     }
 }
