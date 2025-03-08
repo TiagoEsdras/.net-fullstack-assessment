@@ -10,6 +10,7 @@ using EmployeeMaintenance.Application.Queries.Departments;
 using EmployeeMaintenance.Application.Shared;
 using EmployeeMaintenance.Application.Shared.Enums;
 using EmployeeMaintenance.Domain.Entities;
+using FluentValidation;
 using MediatR;
 
 namespace EmployeeMaintenance.Application.Services
@@ -19,16 +20,20 @@ namespace EmployeeMaintenance.Application.Services
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
         private readonly IRepository<Employee> _repository;
+        private readonly IValidator<EmployeeRequestDto> _validator;
 
-        public EmployeeService(IMediator mediator, IMapper mapper, IRepository<Employee> repository)
+        public EmployeeService(IMediator mediator, IMapper mapper, IRepository<Employee> repository, IValidator<EmployeeRequestDto> validator)
         {
             _mediator = mediator;
             _mapper = mapper;
             _repository = repository;
+            _validator = validator;
         }
 
         public async Task<Result<EmployeeResponseDto>> CreateEmployee(EmployeeRequestDto employeeRequest)
         {
+            await _validator.ValidateAndThrowAsync(employeeRequest);
+
             #region Department
 
             var departmentResult = await _mediator.Send(new GetDepartmentByNameQuery(employeeRequest.Department.Name));
