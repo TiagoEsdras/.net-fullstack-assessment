@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EmployeeMaintenance.Application.DTOs.Request;
 using EmployeeMaintenance.Application.DTOs.Response;
 using EmployeeMaintenance.Application.Interfaces.Repositories;
 using EmployeeMaintenance.Application.Queries.Departments;
@@ -21,9 +22,12 @@ namespace EmployeeMaintenance.Application.Handlers.Departments
 
         public async Task<Result<IEnumerable<DepartmentResponseDto>>> Handle(GetDepartmentsQuery request, CancellationToken cancellationToken)
         {
-            var departments = await _departmentRepository.GetAllAsync();
+            var departments = await _departmentRepository.GetAllAsync(request.Pagination.PageNumber, request.Pagination.PageSize);
+            var totalItems = await _departmentRepository.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalItems / (double)request.Pagination.PageSize);
             var departmentDtos = _mapper.Map<IEnumerable<DepartmentResponseDto>>(departments);
-            return Result<IEnumerable<DepartmentResponseDto>>.Success(departmentDtos, string.Format(SuccessMessages.GetEntitiesWithSuccess, nameof(Department)));
+            var paginationInfo = PaginationResponse.PaginationInfo(request.Pagination, totalItems, totalPages);
+            return Result<IEnumerable<DepartmentResponseDto>>.Success(departmentDtos, string.Format(SuccessMessages.GetEntitiesWithSuccess, nameof(Department)), paginationInfo);
         }
     }
 }

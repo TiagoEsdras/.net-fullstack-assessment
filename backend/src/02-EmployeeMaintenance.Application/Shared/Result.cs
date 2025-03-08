@@ -1,4 +1,5 @@
-﻿using EmployeeMaintenance.Application.Shared.Enums;
+﻿using EmployeeMaintenance.Application.DTOs.Request;
+using EmployeeMaintenance.Application.Shared.Enums;
 
 namespace EmployeeMaintenance.Application.Shared
 {
@@ -10,13 +11,15 @@ namespace EmployeeMaintenance.Application.Shared
         public IEnumerable<ErrorMessage> Errors { get; private set; } = [];
         public ResultResponseKind Status { get; private set; }
         public bool IsSuccess { get; private set; }
+        public PaginationResponse? PaginationResponse { get; private set; }
 
-        private Result(ResultResponseKind status, T data, string message)
+        private Result(ResultResponseKind status, T data, string message, PaginationResponse? paginationResponse = null)
         {
             Data = data;
             Message = message;
             Status = status;
             IsSuccess = true;
+            PaginationResponse = paginationResponse;
         }
 
         private Result(ResultResponseKind status, ErrorType errorType, string errorMessage, IEnumerable<ErrorMessage> errors)
@@ -29,6 +32,8 @@ namespace EmployeeMaintenance.Application.Shared
         }
 
         public static Result<T> Success(T data, string message) => new(ResultResponseKind.Success, data, message);
+
+        public static Result<T> Success(T data, string message, PaginationResponse pagination) => new(ResultResponseKind.Success, data, message, pagination);
 
         public static Result<T> Persisted(T data, string message) => new(ResultResponseKind.DataPersisted, data, message);
 

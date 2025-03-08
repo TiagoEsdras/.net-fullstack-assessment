@@ -1,4 +1,5 @@
 ﻿using EmployeeMaintenance.Api.Converters;
+using EmployeeMaintenance.Application.DTOs.Request;
 using EmployeeMaintenance.Application.Queries.Departments;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +20,9 @@ namespace EmployeeMaintenance.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetDepartments()
+        public async Task<IActionResult> GetDepartments([FromQuery] PaginationRequest pagination)
         {
-            var result = await _mediator.Send(new GetDepartmentsQuery());
+            var result = await _mediator.Send(new GetDepartmentsQuery(pagination));
             return _actionResultConverter.Convert(result);
         }
     }

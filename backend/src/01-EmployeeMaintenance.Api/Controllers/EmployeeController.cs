@@ -31,9 +31,9 @@ namespace EmployeeMaintenance.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEmployees()
+        public async Task<IActionResult> GetEmployees([FromQuery] PaginationRequest pagination)
         {
-            var result = await _mediator.Send(new GetEmployeesQuery());
+            var result = await _mediator.Send(new GetEmployeesQuery(pagination));
             return _actionResultConverter.Convert(result);
         }
 

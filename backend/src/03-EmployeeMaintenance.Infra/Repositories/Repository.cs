@@ -16,6 +16,9 @@ namespace EmployeeMaintenance.Infra.Repositories
             _dbSet = _context.Set<T>();
         }
 
+        public async Task<int> CountAsync() =>
+            await _dbSet.AsNoTracking().CountAsync();
+
         public async Task<T> AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
@@ -46,8 +49,8 @@ namespace EmployeeMaintenance.Infra.Repositories
             return true;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
-            => await _dbSet.ToListAsync();
+        public async Task<IEnumerable<T>> GetAllAsync(int pageNumber, int pageSize)
+            => await _dbSet.AsNoTracking().Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
         public async Task<T?> GetByIdAsync(Guid id) =>
             await _dbSet.FindAsync(id);
