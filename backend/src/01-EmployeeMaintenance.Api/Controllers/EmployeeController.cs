@@ -1,4 +1,5 @@
 ﻿using EmployeeMaintenance.Api.Converters;
+using EmployeeMaintenance.Application.Commands.Employees;
 using EmployeeMaintenance.Application.DTOs.Request;
 using EmployeeMaintenance.Application.Interfaces.Services;
 using EmployeeMaintenance.Application.Queries.Employees;
@@ -40,6 +41,13 @@ namespace EmployeeMaintenance.Api.Controllers
         public async Task<IActionResult> GetEmployeeById(Guid id)
         {
             var result = await _mediator.Send(new GetEmployeeByIdQuery(id));
+            return _actionResultConverter.Convert(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEmployeeById(Guid id)
+        {
+            var result = await _mediator.Send(new DeleteEmployeeByIdCommand(id));
             return _actionResultConverter.Convert(result);
         }
     }
