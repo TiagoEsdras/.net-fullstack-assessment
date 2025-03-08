@@ -1,5 +1,7 @@
 using EmployeeMaintenance.Api.Configurations;
+using EmployeeMaintenance.Application.Interfaces.Services;
 using EmployeeMaintenance.Application.Queries.Departments;
+using EmployeeMaintenance.Application.Services;
 using EmployeeMaintenance.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -27,6 +29,7 @@ builder.Services.AddDbContext<EmployeeMaintenanceContext>(options =>
 );
 builder.Services.AddRepositories();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetDepartmentByNameQuery).Assembly));
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 var app = builder.Build();
 
