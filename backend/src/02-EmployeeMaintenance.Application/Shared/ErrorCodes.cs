@@ -11,5 +11,7 @@
         public const string NotFoundEntityByTermCode = "00.02";
 
         #endregion Results Codes
+
+        public const string InternalServerErrorCode = "50.00";
     }
 }

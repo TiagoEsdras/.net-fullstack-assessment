@@ -3,6 +3,7 @@
     public static class ErrorMessages
     {
         public const string UnknownError = "Something unexpected went wrong";
+        public const string InternalServerError = "Internal server error";
         public const string ContactSupport = "Please contact support for more details.";
 
         #region Results Messages

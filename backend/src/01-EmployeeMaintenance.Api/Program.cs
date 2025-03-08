@@ -1,5 +1,6 @@
 using EmployeeMaintenance.Api.Configurations;
 using EmployeeMaintenance.Api.Converters;
+using EmployeeMaintenance.Api.ExceptionsHandler;
 using EmployeeMaintenance.Application.Interfaces.Services;
 using EmployeeMaintenance.Application.Queries.Departments;
 using EmployeeMaintenance.Application.Services;
@@ -33,6 +34,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetDepartmentByNameQuery).Assembly));
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IActionResultConverter, ActionResultConverter>();
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
 
