@@ -67,7 +67,7 @@ namespace EmployeeMaintenance.Application.Services
             #endregion Create Employee
 
             await _repository.SaveAsync();
-            return Result<EmployeeResponseDto>.Persisted(_mapper.Map<EmployeeResponseDto>(employeeResult.Data), string.Format(SuccessMessages.EntityCreatedWithSuccess, nameof(Employee)));
+            return Result<EmployeeResponseDto>.Persisted(employeeResult.Data!, string.Format(SuccessMessages.EntityCreatedWithSuccess, nameof(Employee)));
         }
     }
 }

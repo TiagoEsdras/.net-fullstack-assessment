@@ -1,10 +1,11 @@
-﻿using EmployeeMaintenance.Application.Shared;
+﻿using EmployeeMaintenance.Application.DTOs.Response;
+using EmployeeMaintenance.Application.Shared;
 using EmployeeMaintenance.Domain.Entities;
 using MediatR;
 
 namespace EmployeeMaintenance.Application.Commands.Employees
 {
-    public class CreateEmployeeCommand : IRequest<Result<Employee>>
+    public class CreateEmployeeCommand : IRequest<Result<EmployeeResponseDto>>
     {
         public CreateEmployeeCommand(DateTime hireDate, Guid userId, Guid departmentId)
         {

@@ -1,4 +1,5 @@
 using EmployeeMaintenance.Api.Configurations;
+using EmployeeMaintenance.Application.Mappings;
 using EmployeeMaintenance.Application.Queries.Departments;
 using EmployeeMaintenance.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ builder.Services.AddDbContext<EmployeeMaintenanceContext>(options =>
         it => it.MigrationsAssembly(typeof(EmployeeMaintenanceContext).Assembly.FullName)
     )
 );
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(MapperProfileConfig));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetDepartmentByNameQuery).Assembly));
 builder.Services.AddRepositories();
 builder.Services.AddServices();
