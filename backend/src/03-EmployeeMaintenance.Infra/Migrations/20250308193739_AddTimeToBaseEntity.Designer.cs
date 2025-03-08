@@ -4,6 +4,7 @@ using EmployeeMaintenance.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace _03_EmployeeMaintenance.Infra.Migrations
 {
     [DbContext(typeof(EmployeeMaintenanceContext))]
-    partial class EmployeeMaintenanceContextModelSnapshot : ModelSnapshot
+    [Migration("20250308193739_AddTimeToBaseEntity")]
+    partial class AddTimeToBaseEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

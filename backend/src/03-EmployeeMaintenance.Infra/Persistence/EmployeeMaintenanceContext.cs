@@ -18,21 +18,25 @@ namespace EmployeeMaintenance.Infra.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
-            #region Primary Keys
+            #region Query Filters
 
             modelBuilder.Entity<User>()
-              .HasKey(u => u.Id);
-
-            modelBuilder.Entity<Address>()
-             .HasKey(a => a.Id);
+                .HasQueryFilter(e => !e.IsDeleted)
+                .HasKey(e => e.Id);
 
             modelBuilder.Entity<Employee>()
-             .HasKey(e => e.Id);
+                .HasQueryFilter(e => !e.IsDeleted)
+                .HasKey(e => e.Id);
 
             modelBuilder.Entity<Department>()
-             .HasKey(d => d.Id);
+                .HasQueryFilter(e => !e.IsDeleted)
+                .HasKey(e => e.Id);
 
-            #endregion Primary Keys
+            modelBuilder.Entity<Address>()
+                .HasQueryFilter(e => !e.IsDeleted)
+                .HasKey(e => e.Id);
+
+            #endregion Query Filters
 
             #region Relationships
 
