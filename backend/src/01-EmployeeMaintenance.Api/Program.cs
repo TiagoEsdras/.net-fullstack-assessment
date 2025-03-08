@@ -1,9 +1,5 @@
 using EmployeeMaintenance.Api.Configurations;
-using EmployeeMaintenance.Api.Converters;
-using EmployeeMaintenance.Api.ExceptionsHandler;
-using EmployeeMaintenance.Application.Interfaces.Services;
 using EmployeeMaintenance.Application.Queries.Departments;
-using EmployeeMaintenance.Application.Services;
 using EmployeeMaintenance.Infra.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -29,13 +25,14 @@ builder.Services.AddDbContext<EmployeeMaintenanceContext>(options =>
         it => it.MigrationsAssembly(typeof(EmployeeMaintenanceContext).Assembly.FullName)
     )
 );
-builder.Services.AddRepositories();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetDepartmentByNameQuery).Assembly));
-builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<IActionResultConverter, ActionResultConverter>();
+builder.Services.AddRepositories();
+builder.Services.AddServices();
+builder.Services.AddConverters();
+builder.Services.AddExceptions();
+builder.Services.AddValidators();
 builder.Services.AddProblemDetails();
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
 
@@ -48,6 +45,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseExceptionHandler();
 
 using (var scope = app.Services.CreateScope())
 {
