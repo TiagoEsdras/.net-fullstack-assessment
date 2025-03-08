@@ -7,6 +7,7 @@ using EmployeeMaintenance.Application.DTOs.Response;
 using EmployeeMaintenance.Application.Interfaces.Repositories;
 using EmployeeMaintenance.Application.Interfaces.Services;
 using EmployeeMaintenance.Application.Queries.Departments;
+using EmployeeMaintenance.Application.Shared;
 using EmployeeMaintenance.Application.Shared.Enums;
 using EmployeeMaintenance.Domain.Entities;
 using MediatR;
@@ -26,33 +27,42 @@ namespace EmployeeMaintenance.Application.Services
             _repository = repository;
         }
 
-        public async Task<EmployeeResponseDto> CreateEmployee(EmployeeRequestDto employeeRequest)
+        public async Task<Result<EmployeeResponseDto>> CreateEmployee(EmployeeRequestDto employeeRequest)
         {
             #region Department
 
-            var department = await _mediator.Send(new GetDepartmentByNameQuery(employeeRequest.Department.Name));
+            var departmentResult = await _mediator.Send(new GetDepartmentByNameQuery(employeeRequest.Department.Name));
 
-            if (department.Status == ResultResponseKind.NotFound)
-                department = await _mediator.Send(new CreateDepartmentCommand(employeeRequest.Department.Name));
+            if (departmentResult.Status == ResultResponseKind.NotFound)
+                departmentResult = await _mediator.Send(new CreateDepartmentCommand(employeeRequest.Department.Name));
+
+            if (!departmentResult.IsSuccess)
+                return Result<EmployeeResponseDto>.InternalServerError(departmentResult.ErrorType!.Value, departmentResult.Message, departmentResult.Errors);
 
             #endregion Department
 
             #region Create User
 
             var createUserCommand = _mapper.Map<CreateUserCommand>(employeeRequest.User);
-            var user = await _mediator.Send(createUserCommand);
+            var userResult = await _mediator.Send(createUserCommand);
+
+            if (!userResult.IsSuccess)
+                return Result<EmployeeResponseDto>.InternalServerError(userResult.ErrorType!.Value, userResult.Message, userResult.Errors);
 
             #endregion Create User
 
             #region Create Employee
 
-            var createEmployeeCommand = new CreateEmployeeCommand(employeeRequest.HireDate, user.Data.Id, department.Data.Id);
-            var employee = await _mediator.Send(createEmployeeCommand);
+            var createEmployeeCommand = new CreateEmployeeCommand(employeeRequest.HireDate, userResult.Data!.Id, departmentResult.Data!.Id);
+            var employeeResult = await _mediator.Send(createEmployeeCommand);
+
+            if (!employeeResult.IsSuccess)
+                return Result<EmployeeResponseDto>.InternalServerError(employeeResult.ErrorType!.Value, employeeResult.Message, employeeResult.Errors);
 
             #endregion Create Employee
 
             await _repository.SaveAsync();
-            return _mapper.Map<EmployeeResponseDto>(employee.Data);
+            return Result<EmployeeResponseDto>.Persisted(_mapper.Map<EmployeeResponseDto>(employeeResult.Data), string.Format(SuccessMessages.EntityCreatedWithSuccess, nameof(Employee)));
         }
     }
 }

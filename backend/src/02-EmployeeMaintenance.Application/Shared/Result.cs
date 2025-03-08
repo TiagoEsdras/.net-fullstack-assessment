@@ -5,7 +5,7 @@ namespace EmployeeMaintenance.Application.Shared
     public class Result<T>
     {
         public T? Data { get; private set; }
-        public string? Message { get; private set; }
+        public string Message { get; private set; }
         public ErrorType? ErrorType { get; private set; }
         public IEnumerable<ErrorMessage> Errors { get; private set; } = [];
         public ResultResponseKind Status { get; private set; }
