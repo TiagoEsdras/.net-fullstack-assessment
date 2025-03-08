@@ -4,6 +4,8 @@
     {
         #region Results Codes
 
+        public const string UnknownErrorCode = "00.00";
+
         public const string AnErrorOccurOnCreatingEntityCode = "00.01";
 
         public const string NotFoundEntityByTermCode = "00.02";

@@ -9,7 +9,6 @@ namespace EmployeeMaintenance.Application.Shared
         public ErrorType? ErrorType { get; private set; }
         public IEnumerable<ErrorMessage> Errors { get; private set; } = [];
         public ResultResponseKind Status { get; private set; }
-
         public bool IsSuccess { get; private set; }
 
         private Result(ResultResponseKind status, T data, string message)

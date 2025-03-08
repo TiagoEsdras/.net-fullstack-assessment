@@ -2,6 +2,9 @@
 {
     public static class ErrorMessages
     {
+        public const string UnknownError = "Something unexpected went wrong";
+        public const string ContactSupport = "Please contact support for more details.";
+
         #region Results Messages
 
         public const string AnErrorOccurOnCreatingEntity = "An error occur when try to create {0}";
