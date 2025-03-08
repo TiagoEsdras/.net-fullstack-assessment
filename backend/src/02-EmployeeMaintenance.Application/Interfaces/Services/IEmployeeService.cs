@@ -5,6 +5,6 @@ namespace EmployeeMaintenance.Application.Interfaces.Services
 {
     public interface IEmployeeService
     {
-        Task<EmployeeResposeDto> CreateEmployee(EmployeeRequestDto employeeRequest);
+        Task<EmployeeResponseDto> CreateEmployee(EmployeeRequestDto employeeRequest);
     }
 }

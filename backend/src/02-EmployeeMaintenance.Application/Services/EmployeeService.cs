@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EmployeeMaintenance.Application.Commands.Departments;
+using EmployeeMaintenance.Application.Commands.Employees;
 using EmployeeMaintenance.Application.Commands.Users;
 using EmployeeMaintenance.Application.DTOs.Request;
 using EmployeeMaintenance.Application.DTOs.Response;
@@ -25,17 +26,33 @@ namespace EmployeeMaintenance.Application.Services
             _repository = repository;
         }
 
-        public async Task<EmployeeResposeDto> CreateEmployee(EmployeeRequestDto employeeRequest)
+        public async Task<EmployeeResponseDto> CreateEmployee(EmployeeRequestDto employeeRequest)
         {
+            #region Department
+
             var department = await _mediator.Send(new GetDepartmentByNameQuery(employeeRequest.Department.Name));
 
             if (department.Status == ResultResponseKind.NotFound)
-                await _mediator.Send(new CreateDepartmentCommand(employeeRequest.Department.Name));
+                department = await _mediator.Send(new CreateDepartmentCommand(employeeRequest.Department.Name));
+
+            #endregion Department
+
+            #region Create User
 
             var createUserCommand = _mapper.Map<CreateUserCommand>(employeeRequest.User);
-            await _mediator.Send(createUserCommand);
+            var user = await _mediator.Send(createUserCommand);
+
+            #endregion Create User
+
+            #region Create Employee
+
+            var createEmployeeCommand = new CreateEmployeeCommand(employeeRequest.HireDate, user.Data.Id, department.Data.Id);
+            var employee = await _mediator.Send(createEmployeeCommand);
+
+            #endregion Create Employee
+
             await _repository.SaveAsync();
-            throw new NotImplementedException();
+            return _mapper.Map<EmployeeResponseDto>(employee.Data);
         }
     }
 }

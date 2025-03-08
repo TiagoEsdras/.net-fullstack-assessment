@@ -1,6 +1,6 @@
 ﻿namespace EmployeeMaintenance.Application.DTOs.Response
 {
-    public class AddressResposeDto
+    public class AddressResponseDto
     {
         public Guid Id { get; set; }
         public string Street { get; set; }

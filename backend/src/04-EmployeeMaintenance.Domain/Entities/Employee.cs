@@ -5,6 +5,17 @@ namespace EmployeeMaintenance.Domain.Entities
 {
     public class Employee : BaseEntity
     {
+        public Employee()
+        {
+        }
+
+        public Employee(DateTime hireDate, Guid userId, Guid departmentId)
+        {
+            HireDate = hireDate;
+            UserId = userId;
+            DepartmentId = departmentId;
+        }
+
         [Required]
         [Column("hire_date")]
         public DateTime HireDate { get; private set; }
