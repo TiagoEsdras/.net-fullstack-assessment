@@ -5,6 +5,18 @@ namespace EmployeeMaintenance.Domain.Entities
 {
     public class Address : BaseEntity
     {
+        public Address()
+        {
+        }
+
+        public Address(string street, string city, string state, string zipCode)
+        {
+            Street = street;
+            City = city;
+            State = state;
+            ZipCode = zipCode;
+        }
+
         [Required]
         [MaxLength(255)]
         [Column("street")]

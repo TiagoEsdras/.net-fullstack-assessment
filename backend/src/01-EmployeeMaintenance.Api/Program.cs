@@ -28,6 +28,7 @@ builder.Services.AddDbContext<EmployeeMaintenanceContext>(options =>
     )
 );
 builder.Services.AddRepositories();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetDepartmentByNameQuery).Assembly));
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 

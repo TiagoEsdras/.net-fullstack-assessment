@@ -6,6 +6,11 @@ namespace EmployeeMaintenance.Application.Commands.Departments
 {
     public class CreateDepartmentCommand : IRequest<Result<Department>>
     {
+        public CreateDepartmentCommand(string name)
+        {
+            Name = name;
+        }
+
         public string Name { get; set; }
 
         public Department ToEntity()

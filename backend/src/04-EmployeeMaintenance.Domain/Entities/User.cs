@@ -5,6 +5,18 @@ namespace EmployeeMaintenance.Domain.Entities
 {
     public class User : BaseEntity
     {
+        public User()
+        {
+        }
+
+        public User(string firstName, string lastName, string phone, Address address)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Phone = phone;
+            Address = address;
+        }
+
         [Required]
         [MaxLength(100)]
         [Column("first_name")]
