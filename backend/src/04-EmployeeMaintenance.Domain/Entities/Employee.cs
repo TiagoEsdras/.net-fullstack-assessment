@@ -31,5 +31,11 @@ namespace EmployeeMaintenance.Domain.Entities
         public Guid UserId { get; private set; }
 
         public virtual User User { get; private set; }
+
+        public void UpdateDepartment(Department department)
+        {
+            Department = department;
+            DepartmentId = department.Id;
+        }
     }
 }

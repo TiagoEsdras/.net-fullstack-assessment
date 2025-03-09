@@ -50,5 +50,12 @@ namespace EmployeeMaintenance.Api.Controllers
             var result = await _mediator.Send(new DeleteEmployeeByIdCommand(id));
             return _actionResultConverter.Convert(result);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEmployeeDepartment(Guid id, [FromBody] DepartmentRequestDto request)
+        {
+            var result = await _employeeService.UpdateEmployeeDepartment(id, request);
+            return _actionResultConverter.Convert(result);
+        }
     }
 }

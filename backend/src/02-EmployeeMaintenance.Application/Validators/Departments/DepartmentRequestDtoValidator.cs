@@ -8,15 +8,15 @@ namespace EmployeeMaintenance.Application.Validators.Departments
     {
         public DepartmentRequestDtoValidator()
         {
-            RuleFor(x => x.Name)
+            RuleFor(x => x.DepartmentName)
                 .NotEmpty()
                 .WithErrorCode(ErrorCodes.FieldCannotBeNullOrEmptyCode)
-                .WithMessage(string.Format(ErrorMessages.FieldCannotBeNullOrEmpty, nameof(DepartmentRequestDto.Name)));
+                .WithMessage(string.Format(ErrorMessages.FieldCannotBeNullOrEmpty, nameof(DepartmentRequestDto.DepartmentName)));
 
-            RuleFor(x => x.Name)
+            RuleFor(x => x.DepartmentName)
                .Length(1, 100)
                .WithErrorCode(ErrorCodes.FieldMustHaveLengthBetweenCode)
-               .WithMessage(string.Format(ErrorMessages.FieldMustHaveLengthBetween, nameof(DepartmentRequestDto.Name), 1, 100));
+               .WithMessage(string.Format(ErrorMessages.FieldMustHaveLengthBetween, nameof(DepartmentRequestDto.DepartmentName), 1, 100));
         }
     }
 }

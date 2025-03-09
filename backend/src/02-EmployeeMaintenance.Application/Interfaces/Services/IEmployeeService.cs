@@ -7,5 +7,7 @@ namespace EmployeeMaintenance.Application.Interfaces.Services
     public interface IEmployeeService
     {
         Task<Result<EmployeeResponseDto>> CreateEmployee(EmployeeRequestDto employeeRequest);
+
+        Task<Result<EmployeeResponseDto>> UpdateEmployeeDepartment(Guid employeeId, DepartmentRequestDto departmentRequest);
     }
 }

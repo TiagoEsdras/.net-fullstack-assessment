@@ -23,6 +23,7 @@ namespace EmployeeMaintenance.Application.Handlers.Employees
         {
             var employye = request.ToEntity();
             await _employeeRepository.AddAsync(employye);
+            await _employeeRepository.SaveAsync();
             var employeeDto = _mapper.Map<EmployeeResponseDto>(employye);
             return Result<EmployeeResponseDto>.Persisted(employeeDto, string.Format(SuccessMessages.EntityCreatedWithSuccess, nameof(Employee)));
         }

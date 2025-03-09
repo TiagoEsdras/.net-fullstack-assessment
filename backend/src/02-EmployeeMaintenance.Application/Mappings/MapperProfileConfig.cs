@@ -22,7 +22,7 @@ namespace EmployeeMaintenance.Application.Mappings
             CreateMap<Employee, EmployeeResponseDto>();
             CreateMap<User, UserResponseDto>();
             CreateMap<Address, AddressResponseDto>();
-            CreateMap<Department, DepartmentResponseDto>();
+            CreateMap<Department, DepartmentResponseDto>().ReverseMap();
 
             #endregion Entity to Dto
         }
