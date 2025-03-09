@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03-EmployeeMaintenance.Infr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04-EmployeeMaintenance.Domain", "04-EmployeeMaintenance.Domain\04-EmployeeMaintenance.Domain.csproj", "{075D69AD-72A2-421C-AD63-D9D73BE23BAC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05-EmployeeMaintenance.Tests", "05-EmployeeMaintenance.Tests\05-EmployeeMaintenance.Tests.csproj", "{060D0999-3A54-4DE3-9E9C-9C599EA080DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{075D69AD-72A2-421C-AD63-D9D73BE23BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{075D69AD-72A2-421C-AD63-D9D73BE23BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{075D69AD-72A2-421C-AD63-D9D73BE23BAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{060D0999-3A54-4DE3-9E9C-9C599EA080DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{060D0999-3A54-4DE3-9E9C-9C599EA080DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{060D0999-3A54-4DE3-9E9C-9C599EA080DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{060D0999-3A54-4DE3-9E9C-9C599EA080DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
