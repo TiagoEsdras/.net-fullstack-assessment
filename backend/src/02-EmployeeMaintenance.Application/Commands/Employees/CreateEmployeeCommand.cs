@@ -7,6 +7,10 @@ namespace EmployeeMaintenance.Application.Commands.Employees
 {
     public class CreateEmployeeCommand : IRequest<Result<EmployeeResponseDto>>
     {
+        public CreateEmployeeCommand()
+        {
+        }
+
         public CreateEmployeeCommand(DateTime hireDate, Guid userId, Guid departmentId)
         {
             HireDate = hireDate;
@@ -16,7 +20,7 @@ namespace EmployeeMaintenance.Application.Commands.Employees
 
         public DateTime HireDate { get; set; }
 
-        public Guid UserId { get; private set; }
+        public Guid UserId { get; set; }
 
         public Guid DepartmentId { get; set; }
 
