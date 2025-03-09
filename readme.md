@@ -1,7 +1,3 @@
-A documentação está muito bem estruturada e abrangente! Abaixo estão algumas sugestões para melhorar ainda mais a clareza e organização:
-
----
-
 # API Documentation - EmployeeMaintenance
 
 ## Overview
@@ -115,4 +111,4 @@ This comprehensive testing approach ensures the reliability and maintainability 
 
 The database schema is designed to support the core functionalities of the application. Below is the Entity-Relationship Diagram (ERD) that represents the structure of the database:
 
-![Database ERD](https://imgur.com/a/UQBM76s)
+![Database ERD](https://i.imgur.com/L3Xelpb.jpeg)
