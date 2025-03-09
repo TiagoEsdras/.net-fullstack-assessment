@@ -30,8 +30,6 @@
 
   <ItemGroup>
     <Folder Include="Application\Handlers\Employees\" />
-    <Folder Include="Application\Handlers\Users\" />
-    <Folder Include="Builders\Commands\" />
     <Folder Include="Builders\Queries\" />
   </ItemGroup>
 

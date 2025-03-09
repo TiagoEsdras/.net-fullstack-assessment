@@ -7,7 +7,6 @@ using EmployeeMaintenance.Application.Shared.Enums;
 using EmployeeMaintenance.Domain.Entities;
 using EmployeeMaintenance.Tests.Builders.Commands.Departments;
 using EmployeeMaintenance.Tests.Builders.DTOs.Response;
-using EmployeeMaintenance.Tests.Builders.Entities;
 using FluentAssertions;
 using Moq;
 
@@ -33,15 +32,12 @@ namespace EmployeeMaintenance.Tests.Application.Handlers.Departments
             var command = new CreateDepartmentCommandBuilder()
                 .Build();
 
-            var departmentEntity = new DepartmentBuilder()
-                .WithName(command.Name)
-                .Build();
             var departmentDto = new DepartmentResponseDtoBuilder()
                 .WithName(command.Name)
                 .Build();
 
             _mockDepartmentRepository.Setup(r => r.AddAsync(It.IsAny<Department>()))
-                .ReturnsAsync(departmentEntity);
+                .ReturnsAsync(It.IsAny<Department>());
             _mockMapper.Setup(m => m.Map<DepartmentResponseDto>(It.IsAny<Department>()))
                 .Returns(departmentDto);
 
