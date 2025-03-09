@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Handlers\Employees\" />
     <Folder Include="Builders\Queries\" />
   </ItemGroup>
 
