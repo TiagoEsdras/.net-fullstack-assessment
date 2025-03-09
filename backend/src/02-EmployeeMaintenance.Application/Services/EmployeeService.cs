@@ -19,18 +19,20 @@ namespace EmployeeMaintenance.Application.Services
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        private readonly IValidator<EmployeeRequestDto> _validator;
+        private readonly IValidator<EmployeeRequestDto> _employeeRequestValidator;
+        private readonly IValidator<DepartmentRequestDto> _departmentRequestValidator;
 
-        public EmployeeService(IMediator mediator, IMapper mapper, IValidator<EmployeeRequestDto> validator)
+        public EmployeeService(IMediator mediator, IMapper mapper, IValidator<EmployeeRequestDto> validator, IValidator<DepartmentRequestDto> departmentRequestValidator)
         {
             _mediator = mediator;
             _mapper = mapper;
-            _validator = validator;
+            _employeeRequestValidator = validator;
+            _departmentRequestValidator = departmentRequestValidator;
         }
 
         public async Task<Result<EmployeeResponseDto>> CreateEmployee(EmployeeRequestDto employeeRequest)
         {
-            await _validator.ValidateAndThrowAsync(employeeRequest);
+            await _employeeRequestValidator.ValidateAndThrowAsync(employeeRequest);
 
             #region Department
 
@@ -69,6 +71,8 @@ namespace EmployeeMaintenance.Application.Services
 
         public async Task<Result<EmployeeResponseDto>> UpdateEmployeeDepartment(Guid employeeId, DepartmentRequestDto departmentRequest)
         {
+            await _departmentRequestValidator.ValidateAndThrowAsync(departmentRequest);
+
             #region Employee
 
             var employeeResult = await _mediator.Send(new GetEmployeeByIdQuery(employeeId));
