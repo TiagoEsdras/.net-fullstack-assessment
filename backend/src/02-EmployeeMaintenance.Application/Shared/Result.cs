@@ -1,5 +1,6 @@
 ﻿using EmployeeMaintenance.Application.DTOs.Request;
 using EmployeeMaintenance.Application.Shared.Enums;
+using System.Text.Json.Serialization;
 
 namespace EmployeeMaintenance.Application.Shared
 {
@@ -11,6 +12,8 @@ namespace EmployeeMaintenance.Application.Shared
         public IEnumerable<ErrorMessage> Errors { get; private set; } = [];
         public ResultResponseKind Status { get; private set; }
         public bool IsSuccess { get; private set; }
+
+        [JsonIgnore]
         public PaginationResponse? PaginationResponse { get; private set; }
 
         private Result(ResultResponseKind status, T data, string message, PaginationResponse? paginationResponse = null)

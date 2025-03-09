@@ -1,8 +1,10 @@
 ﻿using EmployeeMaintenance.Api.Converters;
 using EmployeeMaintenance.Application.Commands.Employees;
 using EmployeeMaintenance.Application.DTOs.Request;
+using EmployeeMaintenance.Application.DTOs.Response;
 using EmployeeMaintenance.Application.Interfaces.Services;
 using EmployeeMaintenance.Application.Queries.Employees;
+using EmployeeMaintenance.Application.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +26,9 @@ namespace EmployeeMaintenance.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateEmployee([FromBody] EmployeeRequestDto request)
         {
             var result = await _employeeService.CreateEmployee(request);
@@ -31,6 +36,7 @@ namespace EmployeeMaintenance.Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(Result<IEnumerable<EmployeeResponseDto>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetEmployees([FromQuery] PaginationRequest pagination)
         {
             var result = await _mediator.Send(new GetEmployeesQuery(pagination));
@@ -38,6 +44,9 @@ namespace EmployeeMaintenance.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Result<EmployeeResponseDto>), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetEmployeeById(Guid id)
         {
             var result = await _mediator.Send(new GetEmployeeByIdQuery(id));
@@ -45,6 +54,9 @@ namespace EmployeeMaintenance.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(Result<bool>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<bool>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Result<bool>), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteEmployeeById(Guid id)
         {
             var result = await _mediator.Send(new DeleteEmployeeByIdCommand(id));
@@ -52,6 +64,10 @@ namespace EmployeeMaintenance.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(Result<bool>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<bool>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Result<bool>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Result<bool>), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateEmployeeDepartment(Guid id, [FromBody] DepartmentRequestDto request)
         {
             var result = await _employeeService.UpdateEmployeeDepartment(id, request);
