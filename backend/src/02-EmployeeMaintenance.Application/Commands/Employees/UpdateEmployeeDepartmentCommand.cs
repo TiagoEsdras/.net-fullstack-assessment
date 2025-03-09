@@ -6,6 +6,10 @@ namespace EmployeeMaintenance.Application.Commands.Employees
 {
     public class UpdateEmployeeDepartmentCommand : IRequest<Result<EmployeeResponseDto>>
     {
+        public UpdateEmployeeDepartmentCommand()
+        {
+        }
+
         public UpdateEmployeeDepartmentCommand(Guid employeeId, DepartmentResponseDto department)
         {
             EmployeeId = employeeId;
