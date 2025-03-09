@@ -33,10 +33,10 @@ namespace EmployeeMaintenance.Application.Validators.Users
                 .WithErrorCode(ErrorCodes.FieldCannotBeNullOrEmptyCode)
                 .WithMessage(string.Format(ErrorMessages.FieldCannotBeNullOrEmpty, nameof(UserRequestDto.Phone)));
 
-            RuleFor(x => x.FirstName)
+            RuleFor(x => x.Phone)
                .Length(1, 20)
                .WithErrorCode(ErrorCodes.FieldMustHaveLengthBetweenCode)
-               .WithMessage(string.Format(ErrorMessages.FieldMustHaveLengthBetween, nameof(UserRequestDto.Phone), 1, 100));
+               .WithMessage(string.Format(ErrorMessages.FieldMustHaveLengthBetween, nameof(UserRequestDto.Phone), 1, 20));
 
             RuleFor(x => x.Address)
                .SetValidator(addressRequestDtoValidator);
