@@ -53,6 +53,9 @@ namespace EmployeeMaintenance.Tests.Application.Services
 
             var employeeResponseDto = new EmployeeResponseDtoBuilder().Build();
 
+            _mediatorMock.Setup(m => m.Send(It.IsAny<SaveUserImageCommand>(), It.IsAny<CancellationToken>()))
+                         .ReturnsAsync(Result<string>.Success("image/path", string.Empty));
+
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetDepartmentByNameQuery>(), It.IsAny<CancellationToken>()))
                          .ReturnsAsync(Result<DepartmentResponseDto>.Success(departmentResponseDto, string.Empty));
 
@@ -71,6 +74,7 @@ namespace EmployeeMaintenance.Tests.Application.Services
             // Assert
             result.IsSuccess.Should().BeTrue();
             result.Status.Should().Be(ResultResponseKind.DataPersisted);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<SaveUserImageCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             _mediatorMock.Verify(m => m.Send(It.IsAny<GetDepartmentByNameQuery>(), It.IsAny<CancellationToken>()), Times.Once);
             _mediatorMock.Verify(m => m.Send(It.IsAny<CreateDepartmentCommand>(), It.IsAny<CancellationToken>()), Times.Never);
             _mediatorMock.Verify(m => m.Send(It.IsAny<CreateUserCommand>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -88,6 +92,9 @@ namespace EmployeeMaintenance.Tests.Application.Services
             var userResponseDto = new UserResponseDtoBuilder().Build();
 
             var employeeResponseDto = new EmployeeResponseDtoBuilder().Build();
+
+            _mediatorMock.Setup(m => m.Send(It.IsAny<SaveUserImageCommand>(), It.IsAny<CancellationToken>()))
+                         .ReturnsAsync(Result<string>.Success("image/path", string.Empty));
 
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetDepartmentByNameQuery>(), It.IsAny<CancellationToken>()))
                          .ReturnsAsync(Result<DepartmentResponseDto>.NotFound(ErrorType.DataNotFound, string.Empty, [new ErrorMessage(string.Empty, string.Empty)]));
@@ -110,6 +117,7 @@ namespace EmployeeMaintenance.Tests.Application.Services
             // Assert
             result.IsSuccess.Should().BeTrue();
             result.Status.Should().Be(ResultResponseKind.DataPersisted);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<SaveUserImageCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             _mediatorMock.Verify(m => m.Send(It.IsAny<GetDepartmentByNameQuery>(), It.IsAny<CancellationToken>()), Times.Once);
             _mediatorMock.Verify(m => m.Send(It.IsAny<CreateDepartmentCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             _mediatorMock.Verify(m => m.Send(It.IsAny<CreateUserCommand>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -117,10 +125,34 @@ namespace EmployeeMaintenance.Tests.Application.Services
         }
 
         [Fact]
+        public async Task CreateEmployee_ShouldReturnBadRequest_WhenSaveUserImageFails()
+        {
+            // Arrange
+            var employeeRequest = new EmployeeRequestDtoBuilder().Build();
+
+            _mediatorMock.Setup(m => m.Send(It.IsAny<SaveUserImageCommand>(), It.IsAny<CancellationToken>()))
+                         .ReturnsAsync(Result<string>.BadRequest(ErrorType.InvalidData, string.Empty, []));
+
+            // Act
+            var result = await _employeeService.CreateEmployee(employeeRequest);
+
+            // Assert
+            result.IsSuccess.Should().BeFalse();
+            result.Status.Should().Be(ResultResponseKind.BadRequest);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<SaveUserImageCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<GetDepartmentByNameQuery>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<CreateUserCommand>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<CreateEmployeeCommand>(), It.IsAny<CancellationToken>()), Times.Never);
+        }
+
+        [Fact]
         public async Task CreateEmployee_ShouldReturnInternalServerError_WhenDepartmentNoExistOnTryCreateResultIsNoSuccess()
         {
             // Arrange
             var employeeRequest = new EmployeeRequestDtoBuilder().Build();
+
+            _mediatorMock.Setup(m => m.Send(It.IsAny<SaveUserImageCommand>(), It.IsAny<CancellationToken>()))
+                         .ReturnsAsync(Result<string>.Success("image/path", string.Empty));
 
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetDepartmentByNameQuery>(), It.IsAny<CancellationToken>()))
                          .ReturnsAsync(Result<DepartmentResponseDto>.NotFound(ErrorType.DataNotFound, string.Empty, [new ErrorMessage(string.Empty, string.Empty)]));
@@ -134,6 +166,7 @@ namespace EmployeeMaintenance.Tests.Application.Services
             // Assert
             result.IsSuccess.Should().BeFalse();
             result.Status.Should().Be(ResultResponseKind.InternalServerError);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<SaveUserImageCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             _mediatorMock.Verify(m => m.Send(It.IsAny<GetDepartmentByNameQuery>(), It.IsAny<CancellationToken>()), Times.Once);
             _mediatorMock.Verify(m => m.Send(It.IsAny<CreateDepartmentCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             _mediatorMock.Verify(m => m.Send(It.IsAny<CreateUserCommand>(), It.IsAny<CancellationToken>()), Times.Never);
@@ -147,6 +180,9 @@ namespace EmployeeMaintenance.Tests.Application.Services
             var employeeRequest = new EmployeeRequestDtoBuilder().Build();
 
             var departmentResponseDto = new DepartmentResponseDtoBuilder().Build();
+
+            _mediatorMock.Setup(m => m.Send(It.IsAny<SaveUserImageCommand>(), It.IsAny<CancellationToken>()))
+                         .ReturnsAsync(Result<string>.Success("image/path", string.Empty));
 
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetDepartmentByNameQuery>(), It.IsAny<CancellationToken>()))
                          .ReturnsAsync(Result<DepartmentResponseDto>.Success(departmentResponseDto, string.Empty));
@@ -163,6 +199,7 @@ namespace EmployeeMaintenance.Tests.Application.Services
             // Assert
             result.IsSuccess.Should().BeFalse();
             result.Status.Should().Be(ResultResponseKind.InternalServerError);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<SaveUserImageCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             _mediatorMock.Verify(m => m.Send(It.IsAny<GetDepartmentByNameQuery>(), It.IsAny<CancellationToken>()), Times.Once);
             _mediatorMock.Verify(m => m.Send(It.IsAny<CreateDepartmentCommand>(), It.IsAny<CancellationToken>()), Times.Never);
             _mediatorMock.Verify(m => m.Send(It.IsAny<CreateUserCommand>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -178,6 +215,9 @@ namespace EmployeeMaintenance.Tests.Application.Services
             var departmentResponseDto = new DepartmentResponseDtoBuilder().Build();
 
             var userResponseDto = new UserResponseDtoBuilder().Build();
+
+            _mediatorMock.Setup(m => m.Send(It.IsAny<SaveUserImageCommand>(), It.IsAny<CancellationToken>()))
+                         .ReturnsAsync(Result<string>.Success("image/path", string.Empty));
 
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetDepartmentByNameQuery>(), It.IsAny<CancellationToken>()))
                          .ReturnsAsync(Result<DepartmentResponseDto>.Success(departmentResponseDto, string.Empty));
@@ -197,6 +237,7 @@ namespace EmployeeMaintenance.Tests.Application.Services
             // Assert
             result.IsSuccess.Should().BeFalse();
             result.Status.Should().Be(ResultResponseKind.InternalServerError);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<SaveUserImageCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             _mediatorMock.Verify(m => m.Send(It.IsAny<GetDepartmentByNameQuery>(), It.IsAny<CancellationToken>()), Times.Once);
             _mediatorMock.Verify(m => m.Send(It.IsAny<CreateDepartmentCommand>(), It.IsAny<CancellationToken>()), Times.Never);
             _mediatorMock.Verify(m => m.Send(It.IsAny<CreateUserCommand>(), It.IsAny<CancellationToken>()), Times.Once);

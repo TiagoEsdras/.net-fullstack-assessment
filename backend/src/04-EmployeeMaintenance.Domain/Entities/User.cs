@@ -9,11 +9,12 @@ namespace EmployeeMaintenance.Domain.Entities
         {
         }
 
-        public User(string firstName, string lastName, string phone, Address address)
+        public User(string firstName, string lastName, string phone, string photoUrl, Address address)
         {
             FirstName = firstName;
             LastName = lastName;
             Phone = phone;
+            PhotoUrl = photoUrl;
             Address = address;
         }
 

@@ -9,6 +9,7 @@
         public const string GetEntitiesWithSuccess = "Getting {0}s with success";
         public const string DeleteEntityByTermWithSuccess = "{0} with {1} {2} was deleted with success";
         public const string EntityUpdatedWithSuccess = "{0} updated with success";
+        public const string PhotoSavedWithSuccess = "Photo was saved with success";
 
         #endregion Results Messages
     }

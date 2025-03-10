@@ -18,12 +18,8 @@
 
         public const string FieldCannotBeNullOrEmptyCode = "00.03";
         public const string FieldMustHaveLengthBetweenCode = "00.04";
-        public const string FieldContainInvalidValue = "Field(s) {0} contain(s) invalid value(s)";
-        public const string FieldMustBeGreaterThan = "Field {0} must be greater than {1}";
-        public const string FieldMustBeLowerOrEqualTo = "Field {0} must be lower or equal to {1}";
-        public const string DuplicatedProductIds = "The following ProductId(s) is/are duplicated: {0}";
-        public const string GuidCannotBeEmptyGuid = "Field {0} cannot be empty guid";
-        public const string SaleHasAlreadyBeenCancelled = "Sale with Id {0} has already been cancelled";
+        public const string PhotoBase64MustBeAnPngOrJpegFormatCode = "00.05";
+        public const string PhotoBase64InvalidFormatCode = "00.06";
 
         #endregion Validations Codes
     }

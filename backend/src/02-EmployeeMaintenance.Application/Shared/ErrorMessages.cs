@@ -23,9 +23,9 @@
         public const string FieldMustHaveLengthBetween = "Field {0} must have length between {1} and {2}";
         public const string FieldMustBeGreaterThan = "Field {0} must be greater than {1}";
         public const string FieldMustBeLowerOrEqualTo = "Field {0} must be lower or equal to {1}";
-        public const string DuplicatedProductIds = "The following ProductId(s) is/are duplicated: {0}";
         public const string GuidCannotBeEmptyGuid = "Field {0} cannot be empty guid";
-        public const string SaleHasAlreadyBeenCancelled = "Sale with Id {0} has already been cancelled";
+        public const string PhotoBase64MustBeAnPngOrJpegFormat = "Photo must be an png or jpeg format";
+        public const string PhotoBase64InvalidFormat = "Photo has invalid base 64 format";
 
         #endregion Validations Messages
     }

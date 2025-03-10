@@ -16,6 +16,7 @@ namespace EmployeeMaintenance.Tests.Builders.DTOs.Response
                 FirstName = _faker.Name.FirstName(),
                 LastName = _faker.Name.LastName(),
                 Phone = _faker.Phone.PhoneNumber(),
+                PhotoUrl = _faker.Image.PicsumUrl(),
                 Address = new AddressResponseDtoBuilder().Build(),
                 AddressId = Guid.NewGuid()
             };

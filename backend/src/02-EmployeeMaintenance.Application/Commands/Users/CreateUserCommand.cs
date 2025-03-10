@@ -10,9 +10,10 @@ namespace EmployeeMaintenance.Application.Commands.Users
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
+        public string PhotoUrl { get; set; }
         public UserAddressCommand Address { get; set; }
 
         public User ToEntity()
-            => new(FirstName, LastName, Phone, Address.ToEntity());
+            => new(FirstName, LastName, Phone, PhotoUrl, Address.ToEntity());
     }
 }

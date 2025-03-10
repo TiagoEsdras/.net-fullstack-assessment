@@ -34,6 +34,14 @@ namespace EmployeeMaintenance.Application.Services
         {
             await _employeeRequestValidator.ValidateAndThrowAsync(employeeRequest);
 
+            #region Save Photo
+
+            var photoResult = await _mediator.Send(new SaveUserImageCommand(employeeRequest.User.PhotoBase64, employeeRequest.User.UserName));
+            if (!photoResult.IsSuccess)
+                return Result<EmployeeResponseDto>.BadRequest(photoResult.ErrorType!.Value, photoResult.Message, photoResult.Errors);
+
+            #endregion Save Photo
+
             #region Department
 
             var departmentResult = await _mediator.Send(new GetDepartmentByNameQuery(employeeRequest.Department.DepartmentName));
@@ -49,6 +57,7 @@ namespace EmployeeMaintenance.Application.Services
             #region Create User
 
             var createUserCommand = _mapper.Map<CreateUserCommand>(employeeRequest.User);
+            createUserCommand.PhotoUrl = photoResult.Data!;
             var userResult = await _mediator.Send(createUserCommand);
 
             if (!userResult.IsSuccess)
