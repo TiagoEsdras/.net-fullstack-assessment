@@ -33,5 +33,8 @@ namespace EmployeeMaintenance.Domain.Entities
         public string Phone { get; private set; }
 
         public virtual Address Address { get; private set; }
+
+        [Column("photo_url")]
+        public string PhotoUrl { get; private set; }
     }
 }
