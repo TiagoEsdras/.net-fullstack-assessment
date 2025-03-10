@@ -5,6 +5,10 @@ namespace EmployeeMaintenance.Application.Commands.Users
 {
     public class SaveUserImageCommand : IRequest<Result<string>>
     {
+        public SaveUserImageCommand()
+        {
+        }
+
         public SaveUserImageCommand(string photoBase64, string userName)
         {
             PhotoBase64 = photoBase64;

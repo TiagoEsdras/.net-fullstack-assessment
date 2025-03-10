@@ -9,10 +9,6 @@ namespace EmployeeMaintenance.Application.Handlers.Users
     {
         private readonly string _baseDirectory = "wwwroot/images/users";
 
-        public SaveUserImageCommandHandler()
-        {
-        }
-
         public async Task<Result<string>> Handle(SaveUserImageCommand request, CancellationToken cancellationToken)
         {
             byte[] imageBytes;
@@ -49,7 +45,7 @@ namespace EmployeeMaintenance.Application.Handlers.Users
         {
             // Magic number for JPEG: 0xFF 0xD8 0xFF
             // Magic number for PNG: 0x89 0x50 0x4E 0x47
-            if (imageBytes.Length > 4)
+            if (imageBytes.Length > 3)
             {
                 if (imageBytes[0] == 0xFF && imageBytes[1] == 0xD8 && imageBytes[2] == 0xFF)
                     return ".jpg";
