@@ -48,6 +48,11 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseCors(cors => cors.AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyOrigin()
+        .WithExposedHeaders("x-current-page", "x-page-size", "x-total-count", "x-total-pages"));
+
 app.MapControllers();
 
 app.UseExceptionHandler();
