@@ -3,7 +3,7 @@ import { EmployeeResponse } from "../types/EmployeeResponse";
 import { PaginationHeaders } from "../types/PaginationHeaders";
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL;
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const getAllEmployees = async (  pageNumber: number,  pageSize: number):
   Promise<{ data: EmployeeResponse[]; pagination: PaginationHeaders }> => {

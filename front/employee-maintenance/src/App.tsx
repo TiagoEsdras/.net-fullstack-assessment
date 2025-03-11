@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getAllEmployees } from './services/employeeService';
-import { EmployeeResponse } from 'types/EmployeeResponse';
-import { PaginationHeaders } from 'types/PaginationHeaders';
+import { EmployeeResponse } from './types/EmployeeResponse';
+import { PaginationHeaders } from './types/PaginationHeaders';
 
 const App = () => {
   const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
@@ -24,6 +24,7 @@ const App = () => {
         setError('Error'); 
       }
     } catch (error) {
+      console.error('An error occurred while fetching employees:', error);
       setError('Error');
     } finally {
       setLoading(false);  
