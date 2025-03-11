@@ -2,20 +2,23 @@ import { useEffect, useState } from 'react';
 import { getAllEmployees } from './services/employeeService';
 import { EmployeeResponse } from './types/EmployeeResponse';
 import { PaginationHeaders } from './types/PaginationHeaders';
+import Header from './components/Header';
+import EmployeeList from './components/EmployeeList';
+import Pagination from './components/Pagination';
+import Footer from './components/Footer';
 
 const App = () => {
   const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
   const [pagination, setPagination] = useState<PaginationHeaders>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>(); 
-
   const pageSize = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
   const fetchEmployees = async (pageNumber: number, pageSize: number): Promise<void> => { 
     try {
       setLoading(true);
-      const result: { data: EmployeeResponse[]; pagination: PaginationHeaders } = await getAllEmployees(pageNumber, pageSize);        
+      const result = await getAllEmployees(pageNumber, pageSize);        
 
       if (result.data.length > 0) {
         setEmployees(result.data);  
@@ -57,27 +60,17 @@ const App = () => {
 
   return (
     <div>
-      <h1>Employees</h1>
-      <ul>
-        {employees.map((employee) => (
-          <li key={employee.id}>
-            {employee.user.firstName} {employee.user.lastName} - {employee.department.name}
-          </li>
-        ))}
-      </ul>
-      
-      <div>
-        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-          Previous 
-        </button>
-        <span>
-          Page {pagination?.currentPage} of {pagination?.totalPages}
-        </span>
-        <button onClick={handleNextPage} disabled={currentPage === pagination?.totalPages}>
-          Next
-        </button>
+      <Header />
+      <div className="relative isolate px-6 pt-14 lg:px-8">
+        <EmployeeList employees={employees} />
+        <Pagination
+          pagination={pagination} 
+          onNextPage={handleNextPage} 
+          onPreviousPage={handlePreviousPage} 
+        />
       </div>
-    </div>
+      <Footer />
+    </div> 
   );
 };
 
