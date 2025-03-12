@@ -74,3 +74,17 @@ export const getAllDepartments  = async (  pageNumber: number,  pageSize: number
     throw error;
   }
 };
+
+export const updateEmployeeDepartment = async (  employeeId: string,   departmentName: string):
+ Promise<EmployeeResponse> => {
+  try {
+    const response = await axios.put<BaseResponse<EmployeeResponse>>(
+      `${API_BASE_URL}/Employee/${employeeId}`, 
+      { departmentName }
+    );
+    return response.data.data!;
+  } catch (error) {
+    console.error("Error updating employee department:", error);
+    throw error; 
+  }
+};

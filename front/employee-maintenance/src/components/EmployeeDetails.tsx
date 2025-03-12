@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getEmployeeById, getAllDepartments } from '../services/employeeService';
+import { getEmployeeById, getAllDepartments, updateEmployeeDepartment } from '../services/employeeService';
 import { EmployeeResponse } from '../types/EmployeeResponse';
 import { DepartmentResponse } from '../types/DepartmentResponse';
 import { calculateEmploymentDuration } from '../utils/calculateEmploymentDuration';
@@ -19,11 +19,12 @@ const EmployeeDetails = () => {
   useEffect(() => {
     const fetchEmployee = async () => {
       if (employeeId) {
+        setLoading(true);
         const result = await getEmployeeById(employeeId);
         setEmployee(result.data);
-        setSelectedDepartment(result.data.departmentId);
+        setSelectedDepartment(result.data.department.name);
+        setLoading(false);
       }
-      setLoading(false);
     };
     
     const pageSize = import.meta.env.VITE_PAGE_SIZE_DEFAULT;
@@ -33,7 +34,6 @@ const EmployeeDetails = () => {
       const newDepartments = departmentResult.data;      
      
       setDepartments(prevDepartments => [...prevDepartments, ...newDepartments]);
-
       
       if (!(departmentResult.pagination.totalPages > departmentResult.pagination.currentPage)) {
         setHasMoreDepartments(false);
@@ -45,12 +45,17 @@ const EmployeeDetails = () => {
   }, [employeeId, page]);
 
   const handleDepartmentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedDepartment(e.target.value);
+    setSelectedDepartment(e.target.value);    
   };
 
   const handleUpdateDepartment = async () => {
-    if (employee && selectedDepartment) {     
-      console.log(`Updating department to: ${selectedDepartment}`);
+    if (employee && selectedDepartment) {
+      try {
+        const updatedEmployee = await updateEmployeeDepartment(employee.id, selectedDepartment);       
+        setEmployee(updatedEmployee);
+      } catch (error) {
+        console.error('Failed to update department:', error);
+      }
     }
   };
 
@@ -88,6 +93,7 @@ const EmployeeDetails = () => {
             {employee.user.firstName} {employee.user.lastName}
           </h2>
           <p className="text-lg font-semibold text-gray-500">Employee ID: {employee.id}</p>
+          <p className="text-lg text-gray-600">Department: {employee.department.name}</p>
           <p className="text-lg text-gray-600">Phone: {employee.user.phone}</p>
           <p className="text-lg text-gray-600">
             Address: {employee.user.address.street}, {employee.user.address.city} - {employee.user.address.state}
@@ -116,7 +122,7 @@ const EmployeeDetails = () => {
         >
           <option disabled value="">Select Department</option>
           {departments.map((dept) => (
-            <option key={dept.id} value={dept.id}>
+            <option key={dept.id} value={dept.name}>
               {dept.name}
             </option>
           ))}
