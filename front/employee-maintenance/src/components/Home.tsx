@@ -4,6 +4,7 @@ import { EmployeeResponse } from '../types/EmployeeResponse';
 import { PaginationHeaders } from '../types/PaginationHeaders';
 import EmployeeList from './EmployeeList';
 import Pagination from './Pagination';
+import LoadingSpinner from './LoadingSpinner';
 
 const Home = () => {
   const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
@@ -49,9 +50,8 @@ const Home = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
-  };
-
+    return <LoadingSpinner />;
+  }
   if (error) {
     return <div>Error: {error}</div>;
   };

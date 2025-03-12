@@ -5,6 +5,7 @@ import { EmployeeResponse } from '../types/EmployeeResponse';
 import { DepartmentResponse } from '../types/DepartmentResponse';
 import { calculateEmploymentDuration } from '../utils/calculateEmploymentDuration';
 import { formatHireDate } from '../utils/formatHireDate';
+import LoadingSpinner from './LoadingSpinner';
 
 const EmployeeDetails = () => {
   const { employeeId } = useParams<{ employeeId: string }>();
@@ -60,7 +61,7 @@ const EmployeeDetails = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   if (!employee) {
