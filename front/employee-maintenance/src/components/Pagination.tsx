@@ -13,7 +13,7 @@ const Pagination: React.FC<PaginationProps> = ({ pagination, onNextPage, onPrevi
   const { currentPage, totalPages, totalCount, pageSize } = pagination;
 
   return (
-    <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">  
+    <div className="sticky bottom-0 bg-white py-3 sm:px-6 flex justify-between items-center border-t border-gray-200">
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-700">

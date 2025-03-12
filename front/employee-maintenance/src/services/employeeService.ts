@@ -88,3 +88,17 @@ export const updateEmployeeDepartment = async (  employeeId: string,   departmen
     throw error; 
   }
 };
+
+export const deleteEmployee = async (employeeId: string):
+  Promise<boolean> => {
+  try {
+    const response = await axios.delete<BaseResponse<boolean>>(
+      `${API_BASE_URL}/Employee/${employeeId}`
+    );
+    
+    return response.data.data!;
+  } catch (error) {
+    console.error("Error deleting employee:", error);
+    throw error;
+  }
+};
