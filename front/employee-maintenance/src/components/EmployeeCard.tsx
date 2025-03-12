@@ -2,6 +2,7 @@ import React from 'react';
 import { EmployeeResponse } from '../types/EmployeeResponse';
 import { calculateEmploymentDuration } from '../utils/calculateEmploymentDuration';
 import { formatHireDate } from '../utils/formatHireDate';
+import { Link } from 'react-router-dom';
 
 interface EmployeeCardProps {
   employee: EmployeeResponse;
@@ -16,7 +17,7 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({ employee }) => {
         <img
           src={employee.user.photoUrl ? `${import.meta.env.VITE_BASE_URL}/${employee.user.photoUrl}` : 'https://randomuser.me/api/portraits/lego/1.jpg'}
           alt={`${employee.user.firstName} ${employee.user.lastName}`}
-          className="w-24 h-24 rounded-full mr-6"
+          className="w-24 h-24 rounded-lg mr-6"
         />
         <div>
           <h2 className="text-xl font-bold text-gray-800">
@@ -29,7 +30,7 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({ employee }) => {
         </div>
       </div>
       <div className="flex space-x-3">
-        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">View Details</button>
+        <Link  to={`/employees/${employee.id}`} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">View Details</Link>       
         <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Delete</button>
       </div>
     </div>
