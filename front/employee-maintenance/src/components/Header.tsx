@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -13,9 +13,7 @@ const Header: React.FC = () => {
         </div>
         {showNewEmployeeButton && (
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm/6 font-semibold text-gray-900">
-              New Employee <span aria-hidden="true" className="font-semibold">+</span>
-            </a>
+            <Link to={`/create`} className="text-sm/6 font-semibold text-gray-900">New Employee <span aria-hidden="true" className="font-semibold">+</span></Link>
           </div>
         )}
       </nav>

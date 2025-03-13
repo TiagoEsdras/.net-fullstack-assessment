@@ -1,4 +1,5 @@
 import { BaseResponse } from "../types/BaseResponse";
+import { EmployeeRequest } from "../types/CreateEmployeeRequest ";
 import { DepartmentResponse } from "../types/DepartmentResponse";
 import { EmployeeResponse } from "../types/EmployeeResponse";
 import { PaginationHeaders } from "../types/PaginationHeaders";
@@ -99,6 +100,22 @@ export const deleteEmployee = async (employeeId: string):
     return response.data.data!;
   } catch (error) {
     console.error("Error deleting employee:", error);
+    throw error;
+  }
+};
+
+export const createEmployee = async (
+  employeeData: EmployeeRequest
+): Promise<EmployeeResponse> => {
+  try {
+    const response = await axios.post<BaseResponse<EmployeeResponse>>(
+      `${API_BASE_URL}/Employee`,
+      employeeData
+    );
+    
+    return response.data.data!;
+  } catch (error) {
+    console.error("Error creating employee:", error);
     throw error;
   }
 };

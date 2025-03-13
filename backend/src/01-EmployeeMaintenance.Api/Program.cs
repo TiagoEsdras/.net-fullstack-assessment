@@ -35,6 +35,10 @@ builder.Services.AddConverters();
 builder.Services.AddExceptions();
 builder.Services.AddValidators();
 builder.Services.AddProblemDetails();
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.MaxRequestBodySize = 5242880;
+});
 
 var app = builder.Build();
 
