@@ -121,7 +121,6 @@ const EmployeeForm = () => {
         <div className="bg-white p-8 shadow-md rounded-lg max-w-lg mx-auto">
           <h2 className="text-2xl font-bold mb-4">Create New Employee</h2>
           {loading && <LoadingSpinner />}
-          {error && <p className="text-red-500">{error}</p>}
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>

@@ -43,8 +43,9 @@ export const employeeValidationSchema = yup.object().shape({
         .required('State is required'),
       zipCode: yup
         .string()
-        .required('Zip code is required')
-        .matches(/^[0-9]{5}$/, 'Zip code must be 5 digits'),
+        .required('Last name is required')
+        .min(1, 'Last name must be at least 1 character')
+        .max(25, 'Last name must be less than 25 characters'),
     }),
   }),
 });
