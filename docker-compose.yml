@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  employee-api:
+    container_name: employee-maintenance-api
+    build:      
+      context: .
+      dockerfile: ./backend/src/01-EmployeeMaintenance.Api/Dockerfile
+    ports:
+      - "8081:80"
+    networks:
+      - evaluation-network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Data Source=sqlserver,1433;Initial Catalog=EmployeeMaintenance;User ID=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
+    depends_on:
+      - sqlserver
+
+  employee-frontend:
+    container_name: employee-maintenance-frontend
+    build:
+      context: ./front/employee-maintenance
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_BASE_URL=https://employee-maintenance-api:8081
+      - VITE_API_URL=https://employee-maintenance-api:8081/api
+    depends_on:
+      - employee-api
+    networks:
+      - evaluation-network
+    stdin_open: true
+    tty: true
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    networks:
+      - evaluation-network
+    restart: always
+
+volumes:
+  sqlserver-data:
+
+networks:
+  evaluation-network:
+    driver: bridge

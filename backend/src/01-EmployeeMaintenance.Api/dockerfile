@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+COPY backend/src/01-EmployeeMaintenance.Api/01-EmployeeMaintenance.Api.csproj ./01-EmployeeMaintenance.Api/
+COPY backend/src/02-EmployeeMaintenance.Application/02-EmployeeMaintenance.Application.csproj ./02-EmployeeMaintenance.Application/
+COPY backend/src/03-EmployeeMaintenance.Infra/03-EmployeeMaintenance.Infra.csproj ./03-EmployeeMaintenance.Infra/
+COPY backend/src/04-EmployeeMaintenance.Domain/04-EmployeeMaintenance.Domain.csproj ./04-EmployeeMaintenance.Domain/
+
+RUN dotnet restore ./01-EmployeeMaintenance.Api/01-EmployeeMaintenance.Api.csproj
+
+COPY backend/src/ .
+
+RUN dotnet publish ./01-EmployeeMaintenance.Api/01-EmployeeMaintenance.Api.csproj -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+
+COPY --from=build /app/publish .
+
+ENV ASPNETCORE_URLS=http://+:80
+EXPOSE 80
+
+ENTRYPOINT ["dotnet", "01-EmployeeMaintenance.Api.dll"]

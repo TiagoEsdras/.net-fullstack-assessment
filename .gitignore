@@ -274,10 +274,26 @@ Thumbs.db
 *.db-wal
 
 
-#####
-# End of core ignore list, below put you custom 'per project' settings (patterns or path)
-#####
-/src/Gateway/Properties/launchSettings.Local.json
-/src/Gateway/ocelot.Local.json
-/src/SalesApi/appsettings.Local.json
-/src/SalesApi/Properties/launchSettings.Local.json
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
