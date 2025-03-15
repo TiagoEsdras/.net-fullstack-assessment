@@ -1,4 +1,17 @@
-# API Documentation - EmployeeMaintenance
+# EmployeeMaintenance API Documentation
+
+## Table of Contents
+
+1. **[Overview](#overview)**
+2. **[How to Run](#how-to-run)**
+3. **[Technologies Used](#technologies-used)**
+4. **[Key Features](#key-features)**
+5. **[Architecture](#architecture)**
+6. **[Endpoints](#endpoints)**
+7. **[Testing](#testing-1)**
+8. **[Database Structure](#database-structure)**
+
+--- 
 
 ## Overview
 
@@ -9,6 +22,44 @@ This document provides an overview of the **EmployeeMaintenance API** architectu
 - **Infra**: Manages infrastructure concerns such as database access, external services, and other cross-cutting concerns.
 - **Domain**: Encapsulates the core business logic and domain models.
 - **Tests**: Contains unit and integration tests to ensure the reliability and correctness of the application.
+
+---
+
+## How to Run
+
+To set up and run the **EmployeeMaintenance API**, follow the steps below. Ensure you have **Docker** installed as a prerequisite, as the application is containerized for easy deployment.
+
+### Prerequisites
+- **Docker**: You need to have Docker installed on your system. If you don't have it installed, download and install Docker from the official site: [Docker](https://www.docker.com/get-started).
+
+### Steps to Run
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/TiagoEsdras/.net-fullstack-assessment.git
+   ```
+
+2. **Navigate to the project folder**:
+   ```bash
+   cd SimpleEmployeeMaintenance
+   ```
+
+3. **Build and run the application** using Docker:
+   ```bash
+   docker-compose up --build
+   ```
+
+4. **Wait for the services to start**. Docker will create containers for the SQL Server database, the API and FrontEnd.
+
+### Running the Services
+
+Once the Docker containers are up and running, you can access the following services:
+
+- **API**: The EmployeeMaintenance API will be accessible at [http://localhost:8081](http://localhost:8081).
+- **Frontend**: The frontend application will be accessible at [http://localhost:3000](http://localhost:3000).
+- **Database**: The server database will be accessible at localhost,1433
+  
+Both services should be up and running, allowing you to interact with the API via the frontend or tools like Postman.
 
 ---
 
