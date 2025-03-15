@@ -1,7 +1,5 @@
 # EmployeeMaintenance API Documentation
 
-## Table of Contents
-
 1. **[Overview](#overview)**
 2. **[How to Run](#how-to-run)**
 3. **[Technologies Used](#technologies-used)**
